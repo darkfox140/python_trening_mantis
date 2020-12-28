@@ -54,9 +54,9 @@ class ProjectHelper:
     def create_project(self, project):
         browser = self.app.browser
         self.open_project_page()
-        browser.find_element_by_xpath("//input[@type='submit' and @value='Create New Project']").click()
+        browser.find_element(By.XPATH, "//input[@type='submit' and @value='Create New Project']").click()
         self.fill_project_form(project)
-        browser.find_element_by_xpath("//input[@value='Add Project']").click()
+        browser.find_element(By.XPATH, "//input[@value='Add Project']").click()
 
     def delete_project_by_name(self, name):
         browser = self.app.browser
@@ -64,25 +64,25 @@ class ProjectHelper:
         self.open_manage_projects_tab()
         self.select_project_by_name(name)
         # init deletion
-        browser.find_element_by_css_selector('input.button[value="Delete Project"]').click()
+        browser.find_element(By.CSS_SELECTOR, 'input.button[value="Delete Project"]').click()
         # confirmation
-        browser.find_element_by_css_selector('input.button[type=submit]').click()
+        browser.find_element(By.CSS_SELECTOR, 'input.button[type=submit]').click()
 
     def open_manage_tab(self):
         browser = self.app.browser
-        browser.find_element_by_xpath("/html/body/table[2]/tbody/tr/td[1]/a[7]").click()
+        browser.find_element(By.XPATH, "/html/body/table[2]/tbody/tr/td[1]/a[7]").click()
 
     def open_manage_projects_tab(self):
         browser = self.app.browser
-        browser.find_element_by_xpath("/html/body/div[2]/p/span[2]/a").click()
+        browser.find_element(By.XPATH, "/html/body/div[2]/p/span[2]/a").click()
 
     def select_project_by_name(self, name):
         browser = self.app.browser
-        projects_table = browser.find_elements_by_css_selector("table")[2]
-        rows = projects_table.find_elements_by_css_selector("tr")[2:]
+        projects_table = browser.find_elements(By.CSS_SELECTOR, "table")[2]
+        rows = projects_table.find_elements(By.CSS_SELECTOR, "tr")[2:]
         for element in rows:
-            cells = element.find_elements_by_css_selector("td")
-            name_from_table = cells[0].find_element_by_css_selector("a").text
+            cells = element.find_elements(By.CSS_SELECTOR, "td")
+            name_from_table = cells[0].find_element(By.CSS_SELECTOR, "a").text
             if name_from_table == name:
-                cells[0].find_element_by_css_selector("a").click()
+                cells[0].find_element(By.CSS_SELECTOR, "a").click()
                 break
