@@ -41,8 +41,8 @@ class ProjectHelper:
         project_list = []
         for element in project_rows:
             cells = element.find_elements(By.TAG_NAME, "td")
-            id = cells[0].find_element(By.TAG_NAME, "a").get_attribute("href")
-            id.replace("http://localhost/mantis/manage_proj_edit_page.php?project_id=", "")
+            id = browser.find_element(By.TAG_NAME, "a").get_attribute("href").replace\
+                ("http://localhost/mantis/manage_proj_edit_page.php?project_id=", "")
             name = cells[0].find_element(By.TAG_NAME, "a").text
             status = cells[1].text
             view_state = cells[3].text
@@ -57,3 +57,32 @@ class ProjectHelper:
         browser.find_element_by_xpath("//input[@type='submit' and @value='Create New Project']").click()
         self.fill_project_form(project)
         browser.find_element_by_xpath("//input[@value='Add Project']").click()
+
+    def delete_project_by_name(self, name):
+        browser = self.app.browser
+        self.open_manage_tab()
+        self.open_manage_projects_tab()
+        self.select_project_by_name(name)
+        # init deletion
+        browser.find_element_by_css_selector('input.button[value="Delete Project"]').click()
+        # confirmation
+        browser.find_element_by_css_selector('input.button[type=submit]').click()
+
+    def open_manage_tab(self):
+        browser = self.app.browser
+        browser.find_element_by_xpath("/html/body/table[2]/tbody/tr/td[1]/a[7]").click()
+
+    def open_manage_projects_tab(self):
+        browser = self.app.browser
+        browser.find_element_by_xpath("/html/body/div[2]/p/span[2]/a").click()
+
+    def select_project_by_name(self, name):
+        browser = self.app.browser
+        projects_table = browser.find_elements_by_css_selector("table")[2]
+        rows = projects_table.find_elements_by_css_selector("tr")[2:]
+        for element in rows:
+            cells = element.find_elements_by_css_selector("td")
+            name_from_table = cells[0].find_element_by_css_selector("a").text
+            if name_from_table == name:
+                cells[0].find_element_by_css_selector("a").click()
+                break

@@ -23,7 +23,7 @@ class SessionHelper:
 
     def ensure_logout(self):
         browser = self.app.browser
-        if len(browser.find_elements(By.LINK_TEXT, "Logout")) > 0:
+        if self.is_logged_in():
             self.logout()
 
     def ensure_login(self, username, password):
@@ -34,6 +34,10 @@ class SessionHelper:
             else:
                 self.logout()
         self.login(username, password)
+
+    def is_logged_in(self):
+        browser = self.app.browser
+        return len(browser.find_elements_by_link_text("Logout")) > 0
 
     def is_logged_in_as(self, username):
         browser = self.app.browser
