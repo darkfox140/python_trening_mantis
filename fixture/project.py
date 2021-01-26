@@ -11,8 +11,8 @@ class ProjectHelper:
     def open_project_page(self):
         browser = self.app.browser
         if not (browser.current_url.endswith("manage_proj_page.php")):
-            browser.find_element_by_link_text("Manage").click()
-            browser.find_element_by_link_text("Manage Projects").click()
+            browser.find_element(By.LINK_TEXT, "Manage").click()
+            browser.find_element(By.LINK_TEXT, "Manage Projects").click()
 
     def change_field_value(self, field_name, text):
         browser = self.app.browser

@@ -37,7 +37,7 @@ class SessionHelper:
 
     def is_logged_in(self):
         browser = self.app.browser
-        return len(browser.find_elements_by_link_text("Logout")) > 0
+        return len(browser.find_elements(By.LINK_TEXT, "Logout")) > 0
 
     def is_logged_in_as(self, username):
         browser = self.app.browser
