@@ -24,8 +24,8 @@ class ProjectHelper:
     def change_option_value(self, field_name, option):
         browser = self.app.browser
         if option is not None:
-            browser.find_element_by_name(field_name).click()
-            Select(browser.find_element_by_name(field_name)).select_by_visible_text(option)
+            browser.find_element(By.NAME, field_name).click()
+            Select(browser.find_element(By.NAME, field_name)).select_by_visible_text(option)
 
     def fill_project_form(self, project):
         self.change_field_value("name", project.name)
