@@ -4,7 +4,7 @@ from fixture.application import Application
 import json
 from fixture.db import DbFixture
 from fixture.orm import ORMFixture
-import ftputil
+
 
 fixture = None
 target = None
