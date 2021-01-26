@@ -2,9 +2,9 @@ from model.project import Project
 
 
 def test_add_project(app, db):
-    app.session.login(username="administrator", password="root")
-    project = Project(name="Test project", description="Test description", status="development", view_state="public")
+    project = Project(name="New project", description="Project description", status="development", view_state="public")
     old_projects_list = db.get_projects_list()
+    app.session.login(username="administrator", password="root")
     app.project.create_project(project)
     app.session.logout()
     new_projects_list = db.get_projects_list()

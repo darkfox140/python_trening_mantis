@@ -39,31 +39,6 @@ def stop(request):
     return fixture
 
 
-@pytest.fixture(scope="session", autouse=True)
-def configure_server(request, config):
-    install_server_configuration(config['ftp']['host'], config['ftp']['username'], config['ftp']['password'])
-    def fin():
-        restore_server_configuration(config['ftp']['host'], config['ftp']['username'], config['ftp']['password'])
-    request.addfinalizer(fin)
-
-
-def install_server_configuration(host, username, password):
-    with ftputil.FTPHost(host, username, password) as remote:
-        if remote.path.isfile("config_inc.php.blabla"):
-            remote.remove("config_inc.php.blabla")
-        if remote.path.isfile("config_inc.php"):
-            remote.rename("config_inc.php.blabla", "config_inc.php.blabla")
-        remote.upload(os.path.join(os.path.dirname(__file__), "resources/config_inc.php"), "config_inc.php")
-
-
-def restore_server_configuration(host, username, password):
-    with ftputil.FTPHost(host, username, password) as remote:
-        if remote.path.isfile("config_inc.php.blabla"):
-            if remote.path.isfile("config_inc.php"):
-                remote.remove("config_inc.php")
-            remote.rename("config_inc.php.blabla", "config_inc.php.blabla")
-
-
 @pytest.fixture(scope="session")
 def config(request):
     return load_config(request.config.getoption("--target"))
