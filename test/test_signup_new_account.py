@@ -1,4 +1,4 @@
-'''import string
+import string
 import random
 
 
@@ -13,4 +13,4 @@ def test_signup_new_account(app):
     email = username + "@localhost"
     app.james.ensure_user_exists(username, password)
     app.signup.new_user(email, username, password)
-    assert app.soap.can_login(username, password)'''
+    assert app.soap.can_login(username, password)
